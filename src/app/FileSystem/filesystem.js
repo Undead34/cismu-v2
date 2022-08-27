@@ -49,6 +49,23 @@ const readFile = (path) => {
 }
 
 /**
+ * Create a file or write data in it
+ * @param {*} path path to save file
+ * @param {*} data data to save
+ * @returns null
+ */
+ const writeFile = (path, data) => {
+  return new Promise((resolve, rejects) => {
+    try {
+      fs.writeFileSync(path, data);
+      resolve();
+    } catch (error) {
+      rejects(error);
+    }
+  });
+}
+
+/**
  * List files in a folder
  * @param {string} path path to list directory
  * @returns array of files
@@ -58,39 +75,6 @@ const listFiles = (path) => {
     try {
       let files = fs.readdirSync(path);
       resolve(files);
-    } catch (error) {
-      rejects(error);
-    }
-  });
-}
-
-/**
- * Remove a file
- * @param {*} path path to remove file
- * @returns null
- */
-const deleteFile = (path) => {
-  return new Promise((resolve, rejects) => {
-    try {
-      fs.unlinkSync(path);
-      resolve();
-    } catch (error) {
-      rejects(error);
-    }
-  });
-}
-
-/**
- * Create a file or write data in it
- * @param {*} path path to save file
- * @param {*} data data to save
- * @returns null
- */
-const writeFile = (path, data) => {
-  return new Promise((resolve, rejects) => {
-    try {
-      fs.writeFileSync(path, data);
-      resolve();
     } catch (error) {
       rejects(error);
     }
@@ -130,22 +114,21 @@ const deleteFolder = (path) => {
 }
 
 /**
- * load json file return object 
- * @param {string} path path to json file
- * @returns {Object} object loaded
-*/
-
-const loadJsonFile = (path) => {
+ * Remove a file
+ * @param {*} path path to remove file
+ * @returns null
+ */
+ const deleteFile = (path) => {
   return new Promise((resolve, rejects) => {
     try {
-      let data = fs.readFileSync(path);
-      let object = JSON.parse(data);
-      resolve(object);
+      fs.unlinkSync(path);
+      resolve();
     } catch (error) {
       rejects(error);
     }
   });
 }
+
 
 module.exports = fileSystem = {
   createFolder,
@@ -156,5 +139,4 @@ module.exports = fileSystem = {
   writeFile,
   infoFile,
   deleteFolder,
-  loadJsonFile
 };
