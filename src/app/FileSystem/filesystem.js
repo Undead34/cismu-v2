@@ -134,8 +134,6 @@ const deleteFile = (path) => {
 
 dir.files("C:/Users/maizo/AppData/Local/osu!/Songs", "file", function (err, files) {
   if (err) throw err;
-
-  // include only certain filenames
   files = files.filter(function (file) {
     return /^.*.(WAV|AIFF|FLAC|M4A|MP3|ALAC|OGG|AAC|WMA|Opus)$/i.test(file);
   });
