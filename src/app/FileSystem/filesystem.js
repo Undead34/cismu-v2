@@ -1,3 +1,4 @@
+const dir = require('node-dir');
 const fs = require("fs");
 
 /**
@@ -54,7 +55,7 @@ const readFile = (path) => {
  * @param {*} data data to save
  * @returns null
  */
- const writeFile = (path, data) => {
+const writeFile = (path, data) => {
   return new Promise((resolve, rejects) => {
     try {
       fs.writeFileSync(path, data);
@@ -118,7 +119,7 @@ const deleteFolder = (path) => {
  * @param {*} path path to remove file
  * @returns null
  */
- const deleteFile = (path) => {
+const deleteFile = (path) => {
   return new Promise((resolve, rejects) => {
     try {
       fs.unlinkSync(path);
@@ -128,6 +129,17 @@ const deleteFolder = (path) => {
     }
   });
 }
+
+
+
+dir.files("C:/Users/maizo/AppData/Local/osu!/Songs", "file", function (err, files) {
+  if (err) throw err;
+
+  // include only certain filenames
+  files = files.filter(function (file) {
+    return /^.*.(WAV|AIFF|FLAC|M4A|MP3|ALAC|OGG|AAC|WMA|Opus)$/i.test(file);
+  });
+});
 
 
 module.exports = fileSystem = {
@@ -140,3 +152,5 @@ module.exports = fileSystem = {
   infoFile,
   deleteFolder,
 };
+
+
